@@ -112,9 +112,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-websocket:2.5.3")
 }
 
-
-# Basic Test Cases
-
+#  Basic Test Cases
 ## Test for GET /todos
 
 import io.restassured.RestAssured.*
@@ -162,5 +160,113 @@ fun `should create a new todo`() {
         .body("text", equalTo("New Task"))
         .body("completed", equalTo(false))
 }
+
+# Test for PUT /todos/:id
+
+```kotlin
+@Test
+fun `should update an existing todo`() {
+    val updatedTodo = mapOf("text" to "Updated Task", "completed" to true)
+
+    given()
+        .baseUri("http://localhost:8080")
+        .contentType("application/json")
+        .body(updatedTodo)
+        .put("/todos/1") // Assuming 1 is a valid ID
+    .then()
+        .statusCode(200)
+        .body("text", equalTo("Updated Task"))
+        .body("completed", equalTo(true))
+}
+
+
+# Test for DELETE /todos/:id
+
+```kotlin
+@Test
+fun `should delete an existing todo`() {
+    given()
+        .baseUri("http://localhost:8080")
+        .header("Authorization", "Basic YWRtaW46YWRtaW4=") // admin:admin base64 encoded
+        .delete("/todos/1") // Assuming 1 is a valid ID
+    .then()
+        .statusCode(204) // No content status
+}
+
+# Performance Test for POST /todos
+
+```kotlin
+@Test
+fun `should check POST /todos performance`() {
+    val todo = mapOf("text" to "Performance Test Task", "completed" to false)
+    
+    val startTime = System.currentTimeMillis()
+
+    // Making a number of requests for load testing
+    repeat(100) {
+        given()
+            .baseUri("http://localhost:8080")
+            .contentType("application/json")
+            .body(todo)
+            .post("/todos")
+    }
+
+    val endTime = System.currentTimeMillis()
+    val duration = endTime - startTime
+
+    println("Total time for 100 requests: $duration ms")
+    assert(duration < 5000) // Ensuring the requests are handled in under 5 seconds
+}
+```
+
+# Performance test for POST /todos with JMH
+
+## 1.Install the JMH dependency into the project
+
+```kotlin
+dependencies {
+    implementation("org.openjdk.jmh:jmh-core:1.35")
+    implementation("org.openjdk.jmh:jmh-generator-annprocess:1.35")
+    testImplementation("io.rest-assured:rest-assured:4.4.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+}
+```
+## 2.Writing a performance test
+Create a TodoBenchmark.kt file in the src/main/kotlin folder at the root of the project.
+Insert the following code into this file, which will test the performance of the POST /todos endpoint:
+
+```kotlin
+import org.openjdk.jmh.annotations.Benchmark
+import org.openjdk.jmh.annotations.Warmup
+import org.openjdk.jmh.annotations.Measurement
+import org.openjdk.jmh.annotations.State
+import io.restassured.RestAssured.*
+import io.restassured.http.ContentType
+
+@State(org.openjdk.jmh.annotations.Scope.Thread)
+open class TodoBenchmark {
+
+    val todo = mapOf("text" to "Test Task", "completed" to false)
+
+    @Benchmark
+    @Warmup(iterations = 3) // 3 прогрева
+    @Measurement(iterations = 5) // 5 измерений
+    fun testPostTodo() {
+        given()
+            .baseUri("http://localhost:8080")
+            .contentType(ContentType.JSON)
+
+
+## 3.Create a task to run JMH```kotlin
+
+tasks.register("runBenchmark", JavaExec::class) {
+    main = "org.openjdk.jmh.Main"
+    classpath = sourceSets["main"].runtimeClasspath
+}
+```
+
+## 4.Running the performance test
+
+./gradlew runBenchmark
 
 
