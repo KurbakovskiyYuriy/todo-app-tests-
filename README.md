@@ -102,9 +102,65 @@ The project is organized as follows:
 [Project Structure](https://github.com/KurbakovskiyYuriy/todo-app-tests-/blob/main/Project%20Structure) file.
 
 
+# Configure test dependencies in the build.gradle.kts file
+
+```kotlin
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testImplementation("io.rest-assured:rest-assured:4.4.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-websocket:2.5.3")
+}
 
 
- 
+# Basic Test Cases
 
+## Test for GET /todos
+
+import io.restassured.RestAssured.*
+import org.junit.jupiter.api.Test
+import org.hamcrest.Matchers.*
+
+class TodoApiTests {
+
+    @Test
+    fun `should return a list of todos`() {
+        given()
+            .baseUri("http://localhost:8080")
+            .get("/todos")
+        .then()
+            .statusCode(200)
+            .body("size()", greaterThan(0)) // Checking the list size
+    }
+
+    @Test
+    fun `should return limited todos with offset`() {
+        given()
+            .baseUri("http://localhost:8080")
+            .queryParam("offset", 1)
+            .queryParam("limit", 2)
+            .get("/todos")
+        .then()
+            .statusCode(200)
+            .body("size()", equalTo(2)) // Check if limit is respected
+    }
+}
+
+## Test for POST /todos
+
+```kotlin
+@Test
+fun `should create a new todo`() {
+    val todo = mapOf("text" to "New Task", "completed" to false)
+    given()
+        .baseUri("http://localhost:8080")
+        .contentType("application/json")
+        .body(todo)
+        .post("/todos")
+    .then()
+        .statusCode(201) // Created status
+        .body("text", equalTo("New Task"))
+        .body("completed", equalTo(false))
+}
 
 
