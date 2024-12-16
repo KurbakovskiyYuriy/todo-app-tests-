@@ -1,0 +1,36 @@
+todo-api-tests/
+├── src/
+│   ├── main/
+│   │   ├── kotlin/
+│   │       ├── com/
+│   │           ├── constants/
+│   │           │   ├── EntityNames.kt           # Константы для имен сущностей
+│   │           ├── api/
+│   │           │   ├── TodoAppMethods.kt        # Методы взаимодействия с API
+│   │           ├── model/
+│   │           │   ├── TodoTask.kt             # Модель данных для TODO
+│   │           ├── utils/
+│   │               ├── Utils.kt                 # Утилитарные методы
+│   ├── test/
+│       ├── kotlin/
+│           ├── com/
+│               ├── api/
+│                   ├── functional/
+│                   │   ├── delete/
+│                   │   │   ├── DeleteTodoTaskTest.kt     # Тесты для DELETE /todos/:id
+│                   │   ├── get/
+│                   │   │   ├── GetTodoTasksTest.kt       # Тесты для GET /todos
+│                   │   ├── post/
+│                   │   │   ├── PostTodoTaskTest.kt       # Тесты для POST /todos
+│                   │   ├── put/
+│                   │   │   ├── PutTodoTaskTest.kt        # Тесты для PUT /todos/:id
+│                   │   ├── webSocket/
+│                   │       ├── WebSocketTest.kt          # Тесты для WebSocket
+│                   ├── common/
+│                   │   ├── TestChecks.kt                 # Общие проверки
+│                   │   ├── TestSteps.kt                  # Общие шаги для тестов
+│                   ├── performance/
+│                       ├── PostTodoPerformanceTest.kt    # Нагрузочные тесты POST /todos
+├── .gitignore                                            # Исключения для Git
+├── build.gradle.kts                                      # Конфигурация Gradle (Kotlin DSL)
+├── README.md                                             # Документация проекта
