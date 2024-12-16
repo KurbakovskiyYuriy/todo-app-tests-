@@ -98,6 +98,7 @@ The emphasis is on the use of Kotlin, and Java is mentioned indirectly via the J
 
 The project is organized as follows:
 
+[Project Structure](https://github.com/KurbakovskiyYuriy/todo-app-tests-/blob/main/Project%20Structure)
 
 
  
