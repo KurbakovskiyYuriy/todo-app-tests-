@@ -98,7 +98,7 @@ The emphasis is on the use of Kotlin, and Java is mentioned indirectly via the J
 
 The project is organized as follows:
 
-todo-api-tests/ ├── src/ │ ├── main/ │ │ ├── kotlin/ │ │ ├── com/ │ │ ├── EntitiesNames.kt # Constants for entity names │ │ ├── TodoAppMethods.kt # Methods for API interactions │ │ ├── model/ │ │ │ ├── TodoTask.kt # Data model for TODO entity │ │ ├── utils/ │ │ ├── UtilKotlin.kt # Utility methods │ ├── test/ │ ├── kotlin/ │ ├── com/ │ ├── api/ │ ├── functional/ │ │ ├── delete/ │ │ │ ├── DeleteTodoTaskTest.kt # Tests for DELETE /todos/:id │ │ ├── get/ │ │ │ ├── GetTodoTasksTest.kt # Tests for GET /todos │ │ ├── post/ │ │ │ ├── PostTodoTaskTest.kt # Tests for POST /todos │ │ ├── put/ │ │ │ ├── PutTodoTaskTest.kt # Tests for PUT /todos/:id │ │ ├── webSocket/ │ │ ├── WebSocketTest.kt # Tests for WebSocket functionality │ ├── checks/ │ │ ├── TestChecks.kt # Common validation checks │ ├── steps/ │ │ ├── TestSteps.kt # Common methods for tests │ ├── performance/ │ ├── PostTodoPerformanceTest.kt # Performance tests for POST /todos ├── .gitignore # Git ignore rules ├── build.gradle # Gradle build configuration ├── README.md # Project documentation
+
 
  
 
