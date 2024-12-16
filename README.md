@@ -45,7 +45,7 @@ The project focuses on:
 - POST /todos`** - Create a new TODO.
 - PUT /todos/:id`** - Update an existing TODO.
 - DELETE /todos/:id`** - Delete a TODO with authentication.
-- `/ws`** - Using WebSocket for real-time updates.
+- `/ws`** - Using WebSocket for TODO updates
 
 ### Main task
 
@@ -71,6 +71,34 @@ The project focuses on:
 The emphasis is on the use of Kotlin, and Java is mentioned indirectly via the JVM Target. Let me know if you'd like additional refinements
 
  ### Running Tests
+ - Clone the repository
+ - Navigate to the project directory
+ - Start the TODO application with Docker
+ - Run the tests
+ 
+ ## Performance Testing
+
+ For performance testing, you can use a library that will simulate a large number of requests, such as Gatling or Apache JMeter. But if the task is to do this directly in Kotlin, you can use JMH (Java Microbenchmarking Harness).
+ The PostTodoPerformanceTest benchmark evaluates the performance of the POST /todos endpoint under parallel load. The benchmark uses coroutines for asynchronous requests. The benchmark measures the following parameters:
+
+- Average request time.
+- Max and min request time.
+- Total time spent on all requests.
+
+### Key Metrics:
+
+- Coroutines (threads): 5
+*Simulates multiple clients using the API at the same time.*
+- Requests per coroutine: 50
+*Represents the request rate per client.*
+- Total requests: 250
+*Adequate volume for performance testing without overloading.*
+
+## Project Structure
+
+The project is organized as follows:
+
+todo-api-tests/ ├── src/ │ ├── main/ │ │ ├── kotlin/ │ │ ├── com/ │ │ ├── EntitiesNames.kt # Constants for entity names │ │ ├── TodoAppMethods.kt # Methods for API interactions │ │ ├── model/ │ │ │ ├── TodoTask.kt # Data model for TODO entity │ │ ├── utils/ │ │ ├── UtilKotlin.kt # Utility methods │ ├── test/ │ ├── kotlin/ │ ├── com/ │ ├── api/ │ ├── functional/ │ │ ├── delete/ │ │ │ ├── DeleteTodoTaskTest.kt # Tests for DELETE /todos/:id │ │ ├── get/ │ │ │ ├── GetTodoTasksTest.kt # Tests for GET /todos │ │ ├── post/ │ │ │ ├── PostTodoTaskTest.kt # Tests for POST /todos │ │ ├── put/ │ │ │ ├── PutTodoTaskTest.kt # Tests for PUT /todos/:id │ │ ├── webSocket/ │ │ ├── WebSocketTest.kt # Tests for WebSocket functionality │ ├── checks/ │ │ ├── TestChecks.kt # Common validation checks │ ├── steps/ │ │ ├── TestSteps.kt # Common methods for tests │ ├── performance/ │ ├── PostTodoPerformanceTest.kt # Performance tests for POST /todos ├── .gitignore # Git ignore rules ├── build.gradle # Gradle build configuration ├── README.md # Project documentation
 
  
 
